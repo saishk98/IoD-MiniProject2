@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GET / should return a success message and match snapshot 1`] = `
+{
+  "header": {
+    "connection": "close",
+    "content-length": "23",
+    "content-type": "text/html; charset=utf-8",
+    "date": "Mon, 12 May 2025 03:16:26 GMT",
+    "etag": "W/"17-aLgzgx4649ilGIhxMiThDscxwfc"",
+    "x-powered-by": "Express",
+  },
+  "req": {
+    "data": undefined,
+    "headers": {},
+    "method": "GET",
+    "url": "http://127.0.0.1:54500/",
+  },
+  "status": 200,
+  "text": "Express API is running!",
+}
+`;

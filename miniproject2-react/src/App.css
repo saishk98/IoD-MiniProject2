@@ -1,0 +1,310 @@
+/* ====== GLOBAL RESET ====== */
+html, body, #root {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-color: lightgrey;
+    color: black;
+    font-family: 'Roboto', 'Arial', sans-serif;
+    overflow-x: hidden;
+  }
+  
+  /* ====== NAVBAR (Header) ====== */
+  .navbar,
+  .MuiAppBar-root {
+    background-color: black !important;
+    color: white;
+    box-shadow: none;
+    height: 60px;
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+  }
+  .navbar .MuiToolbar-root {
+    min-height: 60px !important;
+    padding: 0 !important;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+  .navbar img {
+    width: 150px;
+    height: 50px;
+    object-fit: contain;
+  }
+  .navbar .nav-group {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .navbar .nav-link,
+  .MuiAppBar-root .nav-link,
+  .MuiAppBar-root button {
+    color: white !important;
+    font-weight: bold;
+    font-family: 'Roboto', 'Arial', sans-serif;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-size: 14px;
+    margin: 0 10px;
+    padding: 6px 8px;
+    text-decoration: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  .navbar .nav-link:hover {
+    text-decoration: underline;
+  }
+  
+  /* ====== HOME CAROUSEL ====== */
+  .carousel-item img {
+    width: 100%;
+    height: 550px;
+    object-fit: cover;
+  }
+  
+  /* ====== CHARACTERS PAGE ====== */
+  .charactersContainer {
+    display: flex;
+    width: 100%;
+    min-height: 75vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  
+  .characterGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    max-width: 100%;
+    gap: 20px;
+    padding: 20px;
+  }
+  .characterImageContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 10px;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  .characterImageContainer img {
+    width: 200px;
+    height: 300px;
+    margin-bottom: 10px;
+  }
+  .characterImageContainer p {
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0;
+  }
+  .characterImageContainer:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* ====== GAMES PAGE ====== */
+  .gamesContainer {
+    display: flex;
+    width: 100%;
+  }
+  .gamesGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    padding: 20px;
+  }
+  .game-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 10px;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .game-item img {
+    width: 200px;
+    height: 300px;
+    margin-bottom: 10px;
+  }
+  .game-item p {
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0;
+  }
+  .game-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* ====== SIDEBAR FILTERS (BOTH PAGES) ====== */
+  .sidebar {
+    width: 20%;
+    padding: 20px;
+    margin-left: 75px;
+  }
+  #search {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+  }
+  .filter-section {
+    margin-bottom: 20px;
+  }
+  .filter-section h3 {
+    cursor: pointer;
+    color: #333;
+  }
+  .filter-options {
+    list-style: none;
+    padding-left: 0;
+    display: none;
+  }
+  .filter-options li {
+    margin-bottom: 10px;
+  }
+  
+  /* ====== HOME PAGE MAIN CONTENT ====== */
+  .paragraphContainer {
+    display: flex;
+    gap: 20px;
+    padding: 5px;
+    width: 100%;
+    margin: 0 auto;
+  }
+  .dcBatman,
+  .dcBatmanOrigins,
+  .dcBatmanPower {
+    width: 300px;
+    height: 450px;
+    object-fit: cover;
+  }
+  .dcBatmanOrigins {
+    float: right;
+    margin: 0 0 15px 15px;
+  }
+  
+  /* ====== TYPOGRAPHY ====== */
+  h1 {
+    font-family: 'Impact', 'Arial Black', sans-serif;
+    font-size: 42px;
+    font-weight: normal;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin: 40px 0 15px;
+    color: black;
+  }
+  
+  h2 {
+    font-family: 'Impact', 'Arial Black', sans-serif;
+    font-size: 32px;
+    font-weight: normal;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin: 30px 0 15px;
+    color: black;
+  }
+  
+  h3, h4, h5 {
+    font-family: 'Impact', 'Arial Black', sans-serif;
+    font-size: 24px;
+    font-weight: normal;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 20px 0 10px;
+    color: black;
+  }
+  
+  p, .MuiTypography-root {
+    font-family: 'Arial', sans-serif;
+    font-size: 18px;
+    line-height: 1.7;
+    color: black;
+    margin-bottom: 20px;
+  }
+  
+  /* ====== FOOTER ====== */
+  .footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+    padding: 20px;
+    height: 15vh;
+  }
+  .batmanLogo {
+    width: 150px;
+    height: auto;
+    margin-bottom: 10px;
+  }
+  .footer p {
+    margin: 0;
+    font-size: 14px;
+    text-align: center;
+    color: white;
+  }
+  
+  /* ====== CAROUSEL (MATCH ORIGINAL SITE) ====== */
+  .carousel-container {
+    position: relative;
+    width: 100%;
+    height: 600px;
+    overflow: hidden;
+    margin-bottom: 40px;
+  }
+  
+  .carousel-slide {
+    display: none;
+    width: 100%;
+    height: 600px;
+  }
+  
+  .carousel-slide.active {
+    display: block;
+    animation: fadeIn 1s ease-in-out;
+  }
+  
+  .carousel-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  .carousel-buttons {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: space-between;
+    padding: 0 30px;
+    box-sizing: border-box;
+  }
+  
+  .carousel-button {
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 20px;
+    border-radius: 5px;
+    transition: background 0.3s;
+  }
+  
+  .carousel-button:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
