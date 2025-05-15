@@ -1,11 +1,9 @@
-import express from "express";
-import { readFileSync } from "fs";
-const charactersData = JSON.parse(readFileSync(new URL("../data/characters.json", import.meta.url)));
+const express = require("express");
+const { getAllCharacters, getCharacterById } = require("../controllers/charactersController");
 
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  res.json(charactersData);
-});
+router.get("/", getAllCharacters);
+router.get("/:id", getCharacterById);
 
-export default router;
+module.exports = router;

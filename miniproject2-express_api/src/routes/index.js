@@ -1,12 +1,11 @@
-import express from "express";
-import authRoutes from "./authRoutes.js";
-import gamesRoutes from "./games.js";
-import charactersRoutes from "./characters.js";
+const express = require("express");
+const gamesRoutes = require("./games");
+const charactersRoutes = require("./characters");
 
 const router = express.Router();
 
-router.use("/auth", authRoutes);
+// ✅ Properly map API routes
 router.use("/games", gamesRoutes);
-router.use("/characters", charactersRoutes); 
+router.use("/characters", charactersRoutes);
 
-export default router;
+module.exports = router;

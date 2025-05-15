@@ -6,19 +6,71 @@
     "description": "API documentation for Mini-Project 2"
   },
   "host": "localhost:3000",
-  "basePath": "/",
+  "basePath": "/api",
   "schemes": ["http"],
   "paths": {
-    "/": {
+    "/games": {
       "get": {
-        "summary": "Root endpoint",
-        "description": "Returns a message indicating the API is running",
+        "summary": "Get all games",
+        "description": "Returns a list of available games",
         "responses": {
           "200": {
-            "description": "Successful response",
-            "schema": {
-              "type": "string"
-            }
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/games/{id}": {
+      "get": {
+        "summary": "Get a game by ID",
+        "description": "Returns details of a specific game",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "404": {
+            "description": "Game not found"
+          }
+        }
+      }
+    },
+    "/characters": {
+      "get": {
+        "summary": "Get all characters",
+        "description": "Returns a list of characters",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/characters/{id}": {
+      "get": {
+        "summary": "Get a character by ID",
+        "description": "Returns details of a specific character",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "404": {
+            "description": "Character not found"
           }
         }
       }

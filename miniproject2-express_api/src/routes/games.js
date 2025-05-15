@@ -1,11 +1,9 @@
-import express from "express";
-import { readFileSync } from "fs";
-const gamesData = JSON.parse(readFileSync(new URL("../data/games.json", import.meta.url)));
+const express = require("express");
+const { getAllGames, getGameById } = require("../controllers/gamesController");
 
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  res.json(gamesData);
-});
+router.get("/", getAllGames);
+router.get("/:id", getGameById);
 
-export default router;
+module.exports = router;

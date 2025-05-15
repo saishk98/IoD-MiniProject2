@@ -1,34 +1,112 @@
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
+// Basic user object for validation, adding, and updating password
+const users = [
+  {
+    username: "testuser@example.com",
+    password: "securePass123", // 12-character password
+  },
+];
 
-let users = []; // Simulated user database
+const validAuthToken = "mySecureAuthToken123"; // Define a valid auth token for validation
 
-export const signup = async (req, res) => {
-  const { username, password } = req.body;
+const checkAuthToken = (req, res) => {
+  const authToken = req.headers["auth-token"];
 
-  // Check if user already exists
-  if (users.some(user => user.username === username)) {
-    return res.status(400).json({ message: "User already exists" });
+  if (!authToken) {
+    res.status(401).send("Auth token is missing");
+    return false;
   }
 
-  // Hash password before storing
-  const hashedPassword = await bcrypt.hash(password, 10);
-  users.push({ username, password: hashedPassword });
+  if (authToken !== validAuthToken) {
+    res.status(403).send("Invalid auth token");
+    return false;
+  }
 
-  res.status(201).json({ message: "Signup successful!" });
+  return true;
 };
 
-export const login = async (req, res) => {
-  const { username, password } = req.body;
-  const user = users.find(user => user.username === username);
+// Controller functions (you can replace these with actual implementations)
+const login = (req, res) => {
+  const isValid = checkAuthToken(req, res);
 
-  // Verify user exists and password is correct
-  if (!user || !(await bcrypt.compare(password, user.password))) {
-    return res.status(401).json({ message: "Invalid credentials" });
+  if (!isValid) {
+    return;
   }
 
-  // Generate JWT token
-  const token = jwt.sign({ username }, process.env.JWT_SECRET, { expiresIn: "1h" });
+  const { username, password } = req?.body;
 
-  res.json({ message: "Login successful!", token });
+  if (!username || !password) {
+    return res.status(400).send("Username and password are required");
+  }
+
+  const user = users.find(
+    (u) => u.username === username && u.password === password
+  );
+
+  if (!user) {
+    return res.status(401).send("Invalid username or password");
+    // WHAT WOULD I DO IF I WANTED TO TELL THE FRONT END THAT IT WAS EITHER THE USERNAME OR PASSWORD THAT WAS WRONG?
+  }
+
+  // user is found
+  res.status(200).send("Login successful");
+};
+
+const changePassword = (req, res) => {
+  const isValid = checkAuthToken(req, res);
+
+  if (!isValid) {
+    return;
+  }
+
+  const { username, currentPassword, newPassword } = req?.body;
+
+  if (!username || !currentPassword || !newPassword) {
+    return res
+      .status(400)
+      .send("Username, current password, and new password are required");
+  }
+
+  const user = users.find((u) => u.username === username);
+
+  if (!user) {
+    return res.status(404).send("User not found");
+  }
+
+  if (user.password !== currentPassword) {
+    return res.status(401).send("Current password is incorrect");
+  }
+
+  user.password = newPassword;
+
+  res.status(200).send("Password updated successfully");
+};
+
+const addUser = (req, res) => {
+  const isValid = checkAuthToken(req, res);
+
+  if (!isValid) {
+    return;
+  }
+
+  const { username, password } = req?.body;
+
+  if (!username || !password) {
+    return res.status(400).send("Username and password are required");
+  }
+
+  const userExists = users.some((u) => u.username === username);
+
+  if (userExists) {
+    return res.status(409).send("User already exists");
+  }
+
+  users.push({ username, password });
+
+  res.status(201).send("User added successfully");
+};
+
+module.exports = {
+  login,
+  changePassword,
+  addUser,
 };
