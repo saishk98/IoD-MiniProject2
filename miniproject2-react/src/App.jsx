@@ -30,7 +30,7 @@ function App() {
   const [games, setGames] = useState([]);
   const [characters, setCharacters] = useState([]);
 
-  // ✅ Fetch games and characters from Express API
+  // Fetch games and characters from Express API
   useEffect(() => {
     fetch("http://localhost:3000/api/games")
       .then((response) => response.json())

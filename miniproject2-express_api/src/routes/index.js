@@ -4,7 +4,7 @@ const charactersRoutes = require("./characters");
 
 const router = express.Router();
 
-// ✅ Properly map API routes
+// Map API routes
 router.use("/games", gamesRoutes);
 router.use("/characters", charactersRoutes);
 

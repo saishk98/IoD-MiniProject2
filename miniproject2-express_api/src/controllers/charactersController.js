@@ -14,9 +14,7 @@
     { id: 12, name: "Firefly", category: "Arkham" },
     { id: 13, name: "Harley Quinn", category: "Arkham" },
     { id: 14, name: "Hugo Strange", category: "Arkham" },
-    { id: 15, name: "James Gordon", category: "Arkham"
-      
-     },
+    { id: 15, name: "James Gordon", category: "Arkham"},
     { id: 16, name: "Killer Croc", category: "Arkham" },
     { id: 17, name: "Lucius Fox", category: "Arkham" },
     { id: 18, name: "Mad Hatter", category: "Arkham" },

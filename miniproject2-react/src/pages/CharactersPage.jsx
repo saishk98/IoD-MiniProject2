@@ -5,7 +5,7 @@ import CharactersMainContent from "../components/CharactersMainContent";
 const CharactersPage = () => {
   const [characters, setCharacters] = useState([]);
 
-  // ✅ Fetch characters dynamically from the Express backend
+  // Fetch characters dynamically from the Express backend
   useEffect(() => {
     fetch("http://localhost:3000/api/characters")
       .then((response) => response.json())
@@ -16,7 +16,7 @@ const CharactersPage = () => {
   return (
     <Box sx={{ backgroundColor: "lightgrey", color: "black", minHeight: "100vh", overflowX: "hidden" }}>
       <Container sx={{ py: 4 }}>
-        <CharactersMainContent characters={characters} /> {/* ✅ Pass characters data */}
+        <CharactersMainContent characters={characters} />
       </Container>
     </Box>
   );
