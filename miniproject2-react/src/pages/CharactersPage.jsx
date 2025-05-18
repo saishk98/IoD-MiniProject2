@@ -14,9 +14,16 @@ const CharactersPage = () => {
   }, []);
 
   return (
-    <Box sx={{ backgroundColor: "lightgrey", color: "black", minHeight: "100vh", overflowX: "hidden" }}>
+    <Box
+      sx={{
+        backgroundColor: "lightgrey",
+        color: "black",
+        minHeight: "100vh",
+        overflowX: "hidden",
+      }}
+    >
       <Container sx={{ py: 4 }}>
-        <CharactersMainContent characters={characters} />
+        {characters.length > 0 ? <CharactersMainContent allCharacters={characters} /> : <Box>Loading</Box>}
       </Container>
     </Box>
   );

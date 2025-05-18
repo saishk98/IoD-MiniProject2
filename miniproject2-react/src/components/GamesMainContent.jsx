@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
   TextField,
@@ -9,8 +9,8 @@ import {
   Collapse,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore"; // Ensure usage in JSX
-import gamesData from "../data/games.json";
 import PopupModal from "./PopUpModal"; // Ensure consistent casing
+
 const GamesMainContent = () => {
   const [games, setGames] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -22,24 +22,36 @@ const GamesMainContent = () => {
   const [selectedGame, setSelectedGame] = useState(null);
 
   useEffect(() => {
-    setGames(gamesData.games);
+    fetch("http://localhost:3000/api/games")
+      .then((response) => response.json())
+      .then((data) => setGames(data))
+      .catch((error) => console.error("Games API Error:", error));
   }, []);
 
-  const toggleSelection = (value, _, setSelectedList) => {
+  const toggleSelection = (
+    value,
+    _selectedList,
+    setSelectedList
+  ) => {
     setSelectedList((prev) =>
       prev.includes(value) ? prev.filter((v) => v !== value) : [...prev, value]
     );
   };
+
   const filteredGames = games.filter((game) => {
-    const matchesSearch = game.name.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesSearch = game.name
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
     const matchesClassification =
-      selectedClassifications.length === 0 || selectedClassifications.includes(game.classification);
+      selectedClassifications.length === 0 ||
+      selectedClassifications.includes(game.classification);
     const matchesYear =
       selectedYears.length === 0 || selectedYears.includes(game.year);
     return matchesSearch && matchesClassification && matchesYear;
   });
 
-  const handleCardClick = (game) => {
+  const handleCardClick = (gameId) => {
+    const game = games.find((g) => g.id === gameId);
     setSelectedGame(game);
     setPopupOpen(true);
   };
@@ -73,7 +85,11 @@ const GamesMainContent = () => {
                     <Checkbox
                       checked={selectedClassifications.includes(option)}
                       onChange={() =>
-                        toggleSelection(option, selectedClassifications, setSelectedClassifications)
+                        toggleSelection(
+                          option,
+                          selectedClassifications,
+                          setSelectedClassifications
+                        )
                       }
                     />
                   }
@@ -100,7 +116,9 @@ const GamesMainContent = () => {
                   control={
                     <Checkbox
                       checked={selectedYears.includes(option)}
-                      onChange={() => toggleSelection(option, selectedYears, setSelectedYears)}
+                      onChange={() =>
+                        toggleSelection(option, selectedYears, setSelectedYears)
+                      }
                     />
                   }
                   label={option}
@@ -114,18 +132,22 @@ const GamesMainContent = () => {
       <Box className="gamesGrid">
         {filteredGames.map((game) => (
           <Box
-            key={game.name}
+            key={game.id}
             className="game-item"
-            onClick={() => handleCardClick(game)}
+            onClick={() => handleCardClick(game.id)}
             style={{ cursor: "pointer" }}
           >
-            <img src={`/${game.image}`} alt={game.name} />
+            <img src={game.image} alt={game.name} />
             <p>{game.name}</p>
           </Box>
         ))}
       </Box>
 
-      <PopupModal open={popupOpen} onClose={() => setPopupOpen(false)} content={selectedGame} />
+      <PopupModal
+        open={popupOpen}
+        onClose={() => setPopupOpen(false)}
+        content={selectedGame}
+      />
     </Box>
   );
 };

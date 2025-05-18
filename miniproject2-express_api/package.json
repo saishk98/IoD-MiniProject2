@@ -28,6 +28,9 @@
     "nodemon": "^3.0.1",
     "supertest": "^7.1.0"
   },
+  "jest": {
+    "rootDir": "./"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

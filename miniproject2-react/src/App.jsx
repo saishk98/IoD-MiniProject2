@@ -6,7 +6,7 @@ import HeaderNavbar from "./components/HeaderNavBar";
 import Footer from "./components/Footer";
 import CharactersPage from "./pages/CharactersPage";
 import GamesPage from "./pages/GamesPage";
-import HomeCarousel from "./components/HomeCarousel";
+import Carousel from "./components/HomeCarousel";
 import BatmanProfile from "./components/BatmanProfile";
 import BatmanOrigin from "./components/BatmanOrigin";
 import BatmanPowers from "./components/BatmanPowers";
@@ -15,7 +15,7 @@ import SignUpModal from "./components/SignUpDialog";
 
 const Home = () => (
   <>
-    <HomeCarousel />
+    <Carousel />
     <Container sx={{ py: 4 }}>
       <BatmanProfile />
       <BatmanOrigin />

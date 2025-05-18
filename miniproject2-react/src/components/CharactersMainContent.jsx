@@ -1,21 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 import {
   Box,
-  Typography,
   TextField,
   FormGroup,
   FormControlLabel,
   Checkbox,
   Collapse,
   Button,
-} from '@mui/material';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import charactersData from '../data/characters.json';
+} from "@mui/material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import PopupModal from "./PopUpModal"; // Ensure consistent casing
 
 const CharactersMainContent = () => {
   const [characters, setCharacters] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const [selectedClassifications, setSelectedClassifications] = useState([]);
   const [selectedArchetypes, setSelectedArchetypes] = useState([]);
   const [showClassifications, setShowClassifications] = useState(true);
@@ -24,9 +22,31 @@ const CharactersMainContent = () => {
   const [selectedCharacter, setSelectedCharacter] = useState(null);
 
   useEffect(() => {
-    setCharacters(charactersData.characters);
+    fetch("http://localhost:3000/api/characters")
+      .then((response) => response.json())
+      .then((data) => setCharacters(data))
+      .catch((error) => console.error("Characters API Error:", error));
   }, []);
 
+  /**
+   * Handles clicking on a character card by fetching character details and opening the popup.
+   * @param {number|string} characterId
+   */
+  const handleCardClick = (characterId) => {
+    fetch(`http://localhost:3000/api/characters/${characterId}`)
+      .then((response) => response.json())
+      .then((data) => setSelectedCharacter(data))
+      .catch((error) => console.error("Character API Error:", error));
+
+    setPopupOpen(true);
+  };
+
+  /**
+   * Toggles selection in a filter list.
+   * @param {string} value
+   * @param {string[]} selectedList
+   * @param {Function} setSelectedList
+   */
   const toggleSelection = (value, selectedList, setSelectedList) => {
     setSelectedList((prev) =>
       prev.includes(value) ? prev.filter((v) => v !== value) : [...prev, value]
@@ -34,18 +54,17 @@ const CharactersMainContent = () => {
   };
 
   const filteredCharacters = characters.filter((character) => {
-    const matchesSearch = character.name.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesSearch = character.name
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
     const matchesClassification =
-      selectedClassifications.length === 0 || selectedClassifications.includes(character.classification);
+      selectedClassifications.length === 0 ||
+      selectedClassifications.includes(character.classification);
     const matchesArchetype =
-      selectedArchetypes.length === 0 || selectedArchetypes.includes(character.archetype);
+      selectedArchetypes.length === 0 ||
+      selectedArchetypes.includes(character.archetype);
     return matchesSearch && matchesClassification && matchesArchetype;
   });
-
-  const handleCardClick = (character) => {
-    setSelectedCharacter(character);
-    setPopupOpen(true);
-  };
 
   return (
     <Box className="charactersContainer">
@@ -64,19 +83,25 @@ const CharactersMainContent = () => {
           <Button
             endIcon={<ExpandMoreIcon />}
             onClick={() => setShowClassifications((prev) => !prev)}
-            sx={{ color: '#333', fontWeight: 'bold' }}
+            sx={{ color: "#333", fontWeight: "bold" }}
           >
             CLASSIFICATION
           </Button>
           <Collapse in={showClassifications}>
             <FormGroup>
-              {['Arkham', 'Animated Series'].map((option) => (
+              {["Arkham", "Animated Series"].map((option) => (
                 <FormControlLabel
                   key={option}
                   control={
                     <Checkbox
                       checked={selectedClassifications.includes(option)}
-                      onChange={() => toggleSelection(option, selectedClassifications, setSelectedClassifications)}
+                      onChange={() =>
+                        toggleSelection(
+                          option,
+                          selectedClassifications,
+                          setSelectedClassifications
+                        )
+                      }
                     />
                   }
                   label={option}
@@ -90,19 +115,25 @@ const CharactersMainContent = () => {
           <Button
             endIcon={<ExpandMoreIcon />}
             onClick={() => setShowArchetypes((prev) => !prev)}
-            sx={{ color: '#333', fontWeight: 'bold' }}
+            sx={{ color: "#333", fontWeight: "bold" }}
           >
             ARCHETYPE
           </Button>
           <Collapse in={showArchetypes}>
             <FormGroup>
-              {['Heroes', 'Villains'].map((option) => (
+              {["Heroes", "Villains"].map((option) => (
                 <FormControlLabel
                   key={option}
                   control={
                     <Checkbox
                       checked={selectedArchetypes.includes(option)}
-                      onChange={() => toggleSelection(option, selectedArchetypes, setSelectedArchetypes)}
+                      onChange={() =>
+                        toggleSelection(
+                          option,
+                          selectedArchetypes,
+                          setSelectedArchetypes
+                        )
+                      }
                     />
                   }
                   label={option}
@@ -117,10 +148,10 @@ const CharactersMainContent = () => {
       <Box className="characterGrid">
         {filteredCharacters.map((char) => (
           <Box
-            key={char.name}
+            key={char.id}
             className="characterImageContainer"
-            onClick={() => handleCardClick(char)}
-            style={{ cursor: 'pointer' }}
+            onClick={() => handleCardClick(char.id)}
+            style={{ cursor: "pointer" }}
           >
             <img src={char.image} alt={char.name} />
             <p>{char.name}</p>
@@ -128,7 +159,11 @@ const CharactersMainContent = () => {
         ))}
       </Box>
 
-      <PopupModal open={popupOpen} onClose={() => setPopupOpen(false)} content={selectedCharacter} />
+      <PopupModal
+        open={popupOpen}
+        onClose={() => setPopupOpen(false)}
+        content={selectedCharacter}
+      />
     </Box>
   );
 };
